@@ -32,10 +32,10 @@ class ApplicationController extends Controller
         try {
             $admin = env('ADMIN_EMAIL');
             if ($admin) {
-                Mail::to($admin)->send(new ApplicationReceived($application));
+                // ставим отправку в очередь, чтобы не блокировать ответ пользователя
+                Mail::to($admin)->queue(new ApplicationReceived($application));
             }
         } catch (\Throwable $e) {
-            // логируем, но не мешаем UX
             report($e);
         }
 

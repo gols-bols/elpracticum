@@ -18,4 +18,10 @@ class PageWebController extends Controller
         $page = Page::where('slug', $slug)->firstOrFail();
         return view('pages.show', ['page' => $page]);
     }
+
+    public function open()
+    {
+        // Встроенная современная версия старой open.php
+        return view('application.open');
+    }
 }

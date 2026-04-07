@@ -5,6 +5,7 @@ use App\Http\Controllers\PageWebController;
 use App\Http\Controllers\ApplicationController;
 
 Route::get('/', [PageWebController::class, 'home']);
+Route::get('/open', [PageWebController::class, 'open']);
 
 // Подключаем API-маршруты под префиксом /api (иначе общий catch-all перекроет их)
 Route::prefix('api')->middleware('api')->group(function () {
@@ -21,4 +22,6 @@ Route::post('/application', [ApplicationController::class, 'submit'])->name('app
 Route::get('/admin/applications', [\App\Http\Controllers\Admin\ApplicationAdminController::class, 'index'])
 	->middleware(\App\Http\Middleware\BasicAuth::class);
 Route::get('/admin/applications/{id}', [\App\Http\Controllers\Admin\ApplicationAdminController::class, 'show'])
+	->middleware(\App\Http\Middleware\BasicAuth::class);
+Route::get('/admin/applications/export', [\App\Http\Controllers\Admin\ApplicationAdminController::class, 'export'])
 	->middleware(\App\Http\Middleware\BasicAuth::class);
