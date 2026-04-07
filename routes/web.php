@@ -16,3 +16,9 @@ Route::get('/{slug}', [PageWebController::class, 'show'])->where('slug', '^[A-Za
 // Форма заявки для организации (замена ущербной формы)
 Route::get('/application', [ApplicationController::class, 'showForm'])->name('application.form');
 Route::post('/application', [ApplicationController::class, 'submit'])->name('application.submit');
+
+// Админские маршруты просмотра заявок (HTTP Basic auth)
+Route::get('/admin/applications', [\App\Http\Controllers\Admin\ApplicationAdminController::class, 'index'])
+	->middleware(\App\Http\Middleware\BasicAuth::class);
+Route::get('/admin/applications/{id}', [\App\Http\Controllers\Admin\ApplicationAdminController::class, 'show'])
+	->middleware(\App\Http\Middleware\BasicAuth::class);
